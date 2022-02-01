@@ -20,7 +20,7 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
 	m_exitGame{false} //when true game will exit
 {
-	setupFontAndText(); // load font 
+
 	setupSprite(); // load texture
 }
 
@@ -111,41 +111,35 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
+	m_window.draw(m_smallPlaneSprite);
 	m_window.display();
 }
 
-/// <summary>
-/// load the font and setup the text message for screen
-/// </summary>
-void Game::setupFontAndText()
-{
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
-	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80U);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
-	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
 
-}
 
 /// <summary>
 /// load the texture and setup the sprite for the logo
 /// </summary>
 void Game::setupSprite()
 {
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
+	if ( !m_planeTexture.loadFromFile("assets\\images\\planes.png"))
 	{
 		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
+		std::cout << "problem loading plane" << std::endl;
 	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
+	// get sprite to use texture
+	m_smallPlaneSprite.setTexture(m_planeTexture);
+	// get sprite to use small part of texture
+	m_smallPlaneSprite.setTextureRect(sf::IntRect(362,212, 115, 85));
+	// set sprite to desired location on screen
+	m_smallPlaneSprite.setPosition(400.0f, 300.0f);
+	// set origin of sprite to middle
+	m_smallPlaneSprite.setOrigin(57.5f,42.5f);
+	// set rotation to default 0
+	m_smallPlaneSprite.setRotation(45.0f);
+	// set scale to default 1:1
+	m_smallPlaneSprite.setScale(2.0f, 2.0f);	
+	// set opacity to default 255
+	m_smallPlaneSprite.setColor(sf::Color{ 255,255,255,160 });
+
 }
