@@ -22,6 +22,9 @@ Game::Game() :
 {
 
 	setupSprite(); // load texture
+	background();
+
+
 }
 
 /// <summary>
@@ -111,6 +114,9 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
+	
+	
+	m_window.draw(m_skySprite);
 	m_window.draw(m_smallPlaneSprite);
 	m_window.display();
 }
@@ -142,4 +148,18 @@ void Game::setupSprite()
 	// set opacity to default 255
 	m_smallPlaneSprite.setColor(sf::Color{ 255,255,255,160 });
 
+}
+
+void Game::background()
+{
+	if (!m_skyTexture.loadFromFile("assets\\images\\sky.jpg"))
+	{
+		//message if sky fails to load
+		std::cout << "problem loading sky" << std::endl;
+	}
+	m_skySprite.setTexture(m_skyTexture);
+	//m_skySprite.setTextureRect(sf::IntRect(362, 212, 115, 85));
+	m_skySprite.setPosition(0.0f, 0.0f);
+	m_skyTexture.setRepeated(true);
+	m_skySprite.setTextureRect(sf::IntRect(0, 0, WIDTH, HEIGHT));
 }
